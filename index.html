@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Go Local — LA Ambassador Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --acid: #C8FF00;
+  --black: #111111;
+  --page-bg: #F2F2EF;
+  --card-bg: #FFFFFF;
+  --card-dark: #1C1C1C;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border: rgba(0,0,0,0.08);
+  --radius: 20px;
+  --radius-sm: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page-bg);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(17,17,17,0.97);
+  backdrop-filter: blur(8px);
+}
+.nav-logo { font-weight: 800; font-size: 13px; letter-spacing: 1px; color: var(--acid); text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 11px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--acid); }
+.nav-cta { background: var(--acid); color: var(--black); font-size: 11px; font-weight: 700; padding: 8px 20px; border-radius: 999px; text-decoration: none; letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* HERO */
+.hero {
+  background: var(--black);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 120px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,255,0,0.1) 0%, transparent 70%);
+  top: -150px; right: -150px;
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--acid);
+  margin-bottom: 28px; position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--acid); display: block; }
+.hero-title {
+  font-size: clamp(72px, 9vw, 128px); font-weight: 900; line-height: 0.9; letter-spacing: -2px;
+  color: #fff; margin-bottom: 12px; position: relative; z-index: 2;
+}
+.hero-title .accent { color: var(--acid); }
+.hero-subtitle {
+  font-size: 14px; color: rgba(255,255,255,0.35); letter-spacing: 2.5px; text-transform: uppercase;
+  font-weight: 400; margin-bottom: 64px; position: relative; z-index: 2;
+}
+.hero-stats { display: flex; gap: 0; position: relative; z-index: 2; }
+.hero-stat { padding: 24px 40px; border-left: 1px solid rgba(255,255,255,0.1); }
+.hero-stat:first-child { border-left: none; padding-left: 0; }
+.h-num { font-size: 44px; font-weight: 900; color: var(--acid); line-height: 1; margin-bottom: 4px; letter-spacing: -1px; }
+.h-label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
+
+/* SECTIONS */
+.section { padding: 100px 60px; }
+.s-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.s-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--acid); display: block; }
+.s-title { font-size: clamp(40px, 5vw, 62px); font-weight: 900; letter-spacing: -1.5px; line-height: 1; color: var(--text-primary); margin-bottom: 52px; }
+.s-title-white { color: #fff; }
+.s-eyebrow-dim { color: rgba(255,255,255,0.3); }
+
+/* ACHIEVEMENTS CARDS */
+.achieve-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+.ac {
+  background: var(--card-bg); border-radius: var(--radius); padding: 32px 28px;
+  border: 1px solid var(--border); position: relative; overflow: hidden;
+  transition: transform 0.2s;
+}
+.ac:hover { transform: translateY(-3px); }
+.ac.dark { background: var(--card-dark); border-color: transparent; }
+.ac.acid { background: var(--acid); border-color: transparent; }
+.ac-num { font-size: 48px; font-weight: 900; letter-spacing: -2px; line-height: 1; color: var(--text-primary); margin-bottom: 36px; }
+.ac.dark .ac-num { color: var(--acid); }
+.ac.acid .ac-num { color: var(--black); }
+.ac-label { font-size: 13px; color: var(--text-secondary); line-height: 1.5; font-weight: 500; }
+.ac.dark .ac-label { color: rgba(255,255,255,0.45); }
+.ac.acid .ac-label { color: rgba(0,0,0,0.6); }
+.ac-icon {
+  position: absolute; bottom: 22px; right: 22px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-size: 16px;
+}
+.ac.dark .ac-icon { background: rgba(200,255,0,0.15); }
+
+/* PROGRAM */
+.prog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.prog-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px; border: 1px solid var(--border); }
+.prog-card.dark { background: var(--card-dark); }
+.prog-intro { font-size: 16px; line-height: 1.8; color: var(--text-secondary); margin-bottom: 16px; }
+.prog-intro strong { color: var(--text-primary); }
+.info-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.info-row:last-child { border-bottom: none; }
+.info-key { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--acid); min-width: 110px; flex-shrink: 0; padding-top: 2px; }
+.info-val { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+/* SCOPE */
+.scope-section { background: var(--black); }
+.scope-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.scope-card {
+  background: #1A1A1A; border-radius: var(--radius); padding: 40px;
+  border: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden;
+  transition: border-color 0.2s;
+}
+.scope-card:hover { border-color: rgba(200,255,0,0.2); }
+.scope-bg-num {
+  position: absolute; top: 20px; right: 24px;
+  font-size: 100px; font-weight: 900; color: rgba(200,255,0,0.04); line-height: 1; pointer-events: none; letter-spacing: -4px;
+}
+.scope-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(200,255,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 22px; }
+.scope-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.scope-desc { font-size: 13.5px; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 22px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(200,255,0,0.2); color: rgba(200,255,0,0.65); text-transform: uppercase; }
+
+/* CATEGORIES */
+.cat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.cat-card {
+  background: var(--card-bg); border-radius: var(--radius); padding: 32px 20px; text-align: center;
+  border: 1px solid var(--border); transition: all 0.25s;
+}
+.cat-card:hover { background: var(--black); border-color: transparent; transform: translateY(-4px); }
+.cat-card:hover .cat-name { color: #fff; }
+.cat-card:hover .cat-desc { color: rgba(255,255,255,0.4); }
+.cat-emoji { font-size: 30px; margin-bottom: 12px; display: block; }
+.cat-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.cat-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.cat-badge {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px; margin-top: 10px;
+}
+.cat-badge.live { background: rgba(200,255,0,0.15); color: #6a8500; }
+.cat-badge.pipe { background: rgba(0,0,0,0.06); color: var(--text-muted); }
+.cat-card:hover .cat-badge.live { background: rgba(200,255,0,0.25); }
+.cat-card:hover .cat-badge.pipe { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); }
+
+/* STAKEHOLDERS */
+.stake-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.stake-card {
+  background: var(--card-bg); border-radius: var(--radius); padding: 36px 40px;
+  border: 1px solid var(--border); display: flex; gap: 20px; transition: box-shadow 0.2s;
+}
+.stake-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.s-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.s-role { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+.s-name { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+.s-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+/* SCENARIO */
+.scenario-section { background: var(--black); }
+.scenario-layout { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: start; }
+.sc-aside { background: var(--acid); border-radius: var(--radius); padding: 36px; position: sticky; top: 80px; }
+.sc-big { font-size: 88px; font-weight: 900; line-height: 0.85; letter-spacing: -4px; color: var(--black); margin-bottom: 4px; }
+.sc-unit { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(0,0,0,0.5); margin-bottom: 24px; }
+.sc-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.15); margin: 18px 0; }
+.sc-item { margin-bottom: 12px; }
+.sc-key { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(0,0,0,0.45); margin-bottom: 2px; }
+.sc-val { font-size: 13px; font-weight: 600; color: var(--black); }
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+  width: 1.5px; background: linear-gradient(to bottom, var(--acid) 0%, rgba(200,255,0,0.08) 100%);
+}
+.tl-item { position: relative; padding-bottom: 36px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -34px; top: 5px;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--acid); background: var(--black);
+}
+.tl-time { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--acid); margin-bottom: 5px; }
+.tl-phase { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 7px; }
+.tl-detail { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.75; }
+
+/* WORKFLOW */
+.workflow-section { background: var(--page-bg); }
+.wf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.wf-card {
+  background: var(--card-bg); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s;
+}
+.wf-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+.wf-head { padding: 28px 28px 22px; border-bottom: 1px solid var(--border); background: #FAFAF8; }
+.wf-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.wf-title { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; line-height: 1.1; color: var(--text-primary); margin-bottom: 12px; }
+.wf-ms {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  background: var(--acid); color: var(--black); letter-spacing: 0.5px;
+}
+.wf-body { padding: 18px 28px; }
+.wf-task {
+  display: flex; gap: 10px; padding: 9px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;
+}
+.wf-task:last-child { border-bottom: none; }
+.wf-task:hover { color: var(--text-primary); }
+.wf-dot { color: #7a9900; font-weight: 900; flex-shrink: 0; font-size: 14px; }
+
+/* CREATOR TIERS */
+.tiers-section { background: var(--page-bg); }
+.tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tier-card {
+  background: var(--card-bg); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s;
+}
+.tier-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+.tier-vis { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 52px; }
+.tier-vis.v1 { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }
+.tier-vis.v2 { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); }
+.tier-vis.v3 { background: linear-gradient(135deg, #f9f4c4 0%, #C8FF00 100%); }
+.tier-body { padding: 28px 32px 36px; }
+.t-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
+.t-badge.b1 { background: rgba(0,140,60,0.1); color: #006633; }
+.t-badge.b2 { background: rgba(0,100,220,0.1); color: #004499; }
+.t-badge.b3 { background: rgba(160,130,0,0.1); color: #6a5500; }
+.t-name { font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.t-crit { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); font-weight: 500; }
+.t-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 28px; }
+.t-cta { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.t-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--acid); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: var(--black); transition: transform 0.2s; }
+.tier-card:hover .t-btn { transform: scale(1.12); }
+
+/* METRICS */
+.metrics-section { background: var(--black); }
+.metrics-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.m-card { background: #1A1A1A; border-radius: var(--radius); padding: 32px 28px; border: 1px solid rgba(255,255,255,0.05); transition: border-color 0.2s; }
+.m-card:hover { border-color: rgba(200,255,0,0.25); }
+.m-num { font-size: 48px; font-weight: 900; letter-spacing: -2px; color: var(--acid); line-height: 1; margin-bottom: 36px; }
+.m-label { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; font-weight: 500; }
+
+/* DELIVERABLES */
+.del-section { background: var(--page-bg); }
+.del-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.del-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px; border: 1px solid var(--border); transition: box-shadow 0.2s; }
+.del-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+.del-timing { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.del-title { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.5px; }
+.del-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 22px; }
+.del-item {
+  display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-primary);
+  padding: 10px 14px; background: #F7F7F4; border-radius: var(--radius-sm); margin-bottom: 8px; font-weight: 500;
+}
+.del-item::before { content: '→'; color: #7a9900; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+
+/* CTA */
+.cta-section { background: var(--black); text-align: center; padding: 120px 60px; }
+.cta-title { font-size: clamp(56px, 7vw, 96px); font-weight: 900; letter-spacing: -2px; color: var(--acid); line-height: 1; margin-bottom: 40px; }
+.cta-btn {
+  display: inline-block; background: var(--acid); color: var(--black); font-size: 14px; font-weight: 800;
+  padding: 18px 48px; border-radius: 999px; text-decoration: none; letter-spacing: 0.5px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-btn:hover { transform: scale(1.04); box-shadow: 0 0 48px rgba(200,255,0,0.2); }
+
+footer {
+  background: var(--black); border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 32px 60px; display: flex; justify-content: space-between; align-items: center;
+}
+.f-logo { font-weight: 800; font-size: 12px; color: var(--acid); letter-spacing: 1px; text-transform: uppercase; }
+.f-note { font-size: 11px; color: rgba(255,255,255,0.25); }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: rgba(200,255,0,0.35); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">TikTok Go Local · LA</div>
+  <ul class="nav-links">
+    <li><a href="#program">Program</a></li>
+    <li><a href="#scope">Scope</a></li>
+    <li><a href="#scenario">Scenario</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#creators">Creators</a></li>
+    <li><a href="#deliverables">Deliverables</a></li>
+    <li>
+      <a href="portfolio.html" style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:0.5px;text-transform:uppercase;text-decoration:none;font-weight:500;transition:color 0.2s;border:1px solid rgba(255,255,255,0.12);padding:6px 14px;border-radius:999px" onmouseover="this.style.color='#C8FF00';this.style.borderColor='rgba(200,255,0,0.35)'" onmouseout="this.style.color='rgba(255,255,255,0.45)';this.style.borderColor='rgba(255,255,255,0.12)'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M5 7h4M7 5l2 2-2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Yolin Liang
+      </a>
+    </li>
+  </ul>
+  <a class="nav-cta" href="#workflow">View Playbook</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Work Sample · LA Ambassador · Offline Event Operator</div>
+  <h1 class="hero-title">TIKTOK GO<br><span class="accent">LOCAL</span><br>PLAYBOOK</h1>
+  <p class="hero-subtitle">Field Operations Framework — Los Angeles</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="h-num">7H</div><div class="h-label">On-Site Per Event</div></div>
+    <div class="hero-stat"><div class="h-num">5+</div><div class="h-label">Venue Categories</div></div>
+    <div class="hero-stat"><div class="h-num">1K+</div><div class="h-label">Creator Min Followers</div></div>
+    <div class="hero-stat"><div class="h-num">3</div><div class="h-label">Active Markets</div></div>
+    <div class="hero-stat"><div class="h-num">T+72</div><div class="h-label">BD Package Delivery</div></div>
+  </div>
+</div>
+
+<!-- PROGRAM -->
+<section class="section" id="program" style="background: var(--page-bg);">
+  <div class="s-eyebrow">Program Context</div>
+  <div class="s-title">What is TikTok Go?</div>
+  <div class="achieve-row">
+    <div class="ac"><div class="ac-num">1K+</div><div class="ac-label">Minimum followers to join</div><div class="ac-icon">👤</div></div>
+    <div class="ac dark"><div class="ac-num">2</div><div class="ac-label">Reward types: Commission &amp; Voucher</div><div class="ac-icon">💰</div></div>
+    <div class="ac acid"><div class="ac-num">$25M+</div><div class="ac-label">Monthly GMV benchmark (partner)</div><div class="ac-icon">📈</div></div>
+    <div class="ac"><div class="ac-num">3</div><div class="ac-label">Active markets: US · JP · ID</div><div class="ac-icon">🌏</div></div>
+    <div class="ac dark"><div class="ac-num">5</div><div class="ac-label">Planned categories from Hotel to Beauty</div><div class="ac-icon">🏷️</div></div>
+  </div>
+  <div class="prog-grid">
+    <div class="prog-card">
+      <p class="prog-intro">TikTok Go 是 TikTok 于 2025 年推出的<strong>本地服务创作者货币化程序</strong>——以 commission-based affiliate 为核心，让创作者通过 tag 合作商家视频获得佣金，用户完成预订后直接分成。</p>
+      <p class="prog-intro">这是 TikTok 将平台从<strong>内容发现工具转化为本地服务交易入口</strong>的战略核心。作为 LA Ambassador，你是整个生态的<strong>地面指挥官</strong>——批量激活 KOC，把酒店场景变成内容生产线，把每场数据包变成续约筹码。</p>
+    </div>
+    <div class="prog-card dark">
+      <div class="info-row"><div class="info-key">资格要求</div><div class="info-val">≥ 1,000 followers · 年满 18 岁 · 账号零违规</div></div>
+      <div class="info-row"><div class="info-key">变现模型</div><div class="info-val">佣金 (Commission) + 消费券 (Voucher) 双轨制</div></div>
+      <div class="info-row"><div class="info-key">透明机制</div><div class="info-val">视频自动附带地理位置 + 佣金披露标注</div></div>
+      <div class="info-row"><div class="info-key">创作者支持</div><div class="info-val">专属 TikTok Go Discord + 引导资源</div></div>
+      <div class="info-row"><div class="info-key">扩展路线</div><div class="info-val">Food &amp; Drinks → Leisure → Beauty → Travel</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" style="background: var(--page-bg); padding-top: 0;" id="categories">
+  <div class="s-eyebrow">TikTok Go — Active &amp; Pipeline Categories</div>
+  <div class="cat-grid">
+    <div class="cat-card"><span class="cat-emoji">🏨</span><div class="cat-name">Hotel</div><div class="cat-desc">美国市场首批上线<br>主战场 · 最高佣金</div><div><span class="cat-badge live">LIVE — US</span></div></div>
+    <div class="cat-card"><span class="cat-emoji">🍜</span><div class="cat-name">Food &amp; Drinks</div><div class="cat-desc">酒店餐厅 · 周边 F&amp;B<br>快速转化品类</div><div><span class="cat-badge pipe">Pipeline</span></div></div>
+    <div class="cat-card"><span class="cat-emoji">✈️</span><div class="cat-name">Travel</div><div class="cat-desc">周边目的地<br>酒店延伸场景</div><div><span class="cat-badge pipe">Pipeline</span></div></div>
+    <div class="cat-card"><span class="cat-emoji">🎯</span><div class="cat-name">Leisure</div><div class="cat-desc">Spa · Gym · Pool<br>酒店配套</div><div><span class="cat-badge pipe">Pipeline</span></div></div>
+    <div class="cat-card"><span class="cat-emoji">💅</span><div class="cat-name">Beauty</div><div class="cat-desc">Salon · Wellness<br>高频女性内容</div><div><span class="cat-badge pipe">Pipeline</span></div></div>
+  </div>
+</section>
+
+<!-- SCOPE -->
+<section class="section scope-section" id="scope">
+  <div class="s-eyebrow s-eyebrow-dim">01 — Scope Definition</div>
+  <div class="s-title s-title-white">Operational Scope</div>
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="scope-bg-num">01</div>
+      <div class="scope-icon">◎</div>
+      <div class="scope-title">业务目标 Scope</div>
+      <div class="scope-desc">将 TikTok Go Local 在洛杉矶的品牌认知与创作者生态同步扩张。每场活动既是内容节点，也是 BD 试验场——通过可量化的数据包，把单次合作转化为长期框架协议，完成平台从"内容发现"到"本地服务交易"的闭环。</div>
+      <div class="tag-row"><span class="tag">Brand Awareness</span><span class="tag">Creator Ecosystem</span><span class="tag">Venue BD</span></div>
+    </div>
+    <div class="scope-card">
+      <div class="scope-bg-num">02</div>
+      <div class="scope-icon">⬡</div>
+      <div class="scope-title">线下运营 Scope</div>
+      <div class="scope-desc">以酒店为起点、多品类场地为扩展方向，覆盖全链条运营：场地踩点、物料筹备、现场执行到结算复盘。每场产出必须直接支撑下一场迭代与 BD 汇报。</div>
+      <div class="tag-row"><span class="tag">Hotels</span><span class="tag">F&amp;B</span><span class="tag">Leisure</span><span class="tag">Beauty</span></div>
+    </div>
+    <div class="scope-card">
+      <div class="scope-bg-num">03</div>
+      <div class="scope-icon">◈</div>
+      <div class="scope-title">创作者管理 Scope</div>
+      <div class="scope-desc">覆盖三类创作者全生命周期：① 新人触达与当场转化；② 活跃创作者内容质检与发布追踪；③ 高潜创作者分级维护与复购激活。颗粒度从单条视频引导到 pipeline 健康度监控。</div>
+      <div class="tag-row"><span class="tag">Recruit</span><span class="tag">QC</span><span class="tag">Post Tracking</span><span class="tag">High-Pot</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STAKEHOLDERS -->
+<section class="section" id="stakeholders" style="background: var(--page-bg);">
+  <div class="s-eyebrow">02 — Key Stakeholders</div>
+  <div class="s-title">Who's Involved</div>
+  <div class="stake-grid">
+    <div class="stake-card">
+      <div class="s-dot" style="background: var(--acid);"></div>
+      <div>
+        <div class="s-role">Internal · TikTok</div>
+        <div class="s-name">TikTok Go Local 项目团队</div>
+        <div class="s-desc">汇报活动数据与 KPI；接收 Campaign Brief 和商家上线通知；上报 BD 推进节点与酒店转化情况。</div>
+      </div>
+    </div>
+    <div class="stake-card">
+      <div class="s-dot" style="background: #00AA66;"></div>
+      <div>
+        <div class="s-role" style="color: #00AA66;">Venue Partner</div>
+        <div class="s-name">酒店市场 / 运营负责人</div>
+        <div class="s-desc">场地协调（房型开放、拍摄权限）；日常 BD 关系维护；活动后简报呈递与续约推进。</div>
+      </div>
+    </div>
+    <div class="stake-card">
+      <div class="s-dot" style="background: #FF8C00;"></div>
+      <div>
+        <div class="s-role" style="color: #FF8C00;">Creator · KOC / Nano</div>
+        <div class="s-name">TikTok Go 创作者（已激活 &amp; 新触达）</div>
+        <div class="s-desc">现场引导拍摄；内容质量把控；发布后 tag 挂载追踪；高潜创作者一对一关系建立。</div>
+      </div>
+    </div>
+    <div class="stake-card">
+      <div class="s-dot" style="background: #6677FF;"></div>
+      <div>
+        <div class="s-role" style="color: #6677FF;">Support · Field Team</div>
+        <div class="s-name">兼职现场协助（Check-in / 拍摄助理）</div>
+        <div class="s-desc">活动前 72h 确认排班；现场实时调度；数据记录辅助；签到表与名单管理。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIO -->
+<section class="section scenario-section" id="scenario">
+  <div class="s-eyebrow s-eyebrow-dim">03 — Scenario Assumptions</div>
+  <div class="s-title s-title-white">7-Hour Event Blueprint</div>
+  <div class="scenario-layout">
+    <div class="sc-aside">
+      <div class="sc-big">7H</div>
+      <div class="sc-unit">On-Site Standard</div>
+      <div class="sc-divider"></div>
+      <div class="sc-item"><div class="sc-key">Venue</div><div class="sc-val">Hotel → F&amp;B / Leisure</div></div>
+      <div class="sc-item"><div class="sc-key">Creator Target</div><div class="sc-val">15 – 30 per event</div></div>
+      <div class="sc-item"><div class="sc-key">Min Content</div><div class="sc-val">20 videos / event</div></div>
+      <div class="sc-item"><div class="sc-key">Conversion</div><div class="sc-val">3+ new activations</div></div>
+      <div class="sc-item"><div class="sc-key">High-Potential</div><div class="sc-val">≥ 3 creators flagged</div></div>
+      <div class="sc-item"><div class="sc-key">Prep Window</div><div class="sc-val">T-7d full · T-1d lock</div></div>
+    </div>
+    <div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-time">T — 7 Days</div><div class="tl-phase">Pre-Production · 踩点 &amp; 策划</div><div class="tl-detail">Room call sheet 确认；拍摄角度标记；创作者邀请发出；物料准备（check-in 表、brief 卡、TikTok Go 激活引导）；风险预案草拟。</div></div>
+        <div class="tl-item"><div class="tl-time">T — 1 Day</div><div class="tl-phase">Pre-Production Lock · M1 里程碑</div><div class="tl-detail">Runsheet 最终版锁定；兼职人员排班确认；任何未锁定项触发 Escalation；创作者到场名单确认；酒店对接人 check-in。</div></div>
+        <div class="tl-item"><div class="tl-time">H + 0:00 — 1:00</div><div class="tl-phase">签到 &amp; 破冰 · M2 Soft Open</div><div class="tl-detail">签到率目标 ≥ 60% by H+0:30；分组名单分发；TikTok Go app 操作引导；场地 tour 与拍摄路线讲解。</div></div>
+        <div class="tl-item"><div class="tl-time">H + 1:00 — 5:00</div><div class="tl-phase">核心拍摄 · M3 Content Checkpoint @ H+3</div><div class="tl-detail">分批引导各房型 / 设施拍摄；H+3 每人 ≥ 1 条初版，质检不达标立即补拍；实时 tag 挂载核查；高潜识别启动。</div></div>
+        <div class="tl-item"><div class="tl-time">H + 5:00 — 7:00</div><div class="tl-phase">收尾 &amp; 转化 · M4 High-Potential Flag</div><div class="tl-detail">高潜名单锁定（≥ 3 人）；一对一转化对话；新创作者 TikTok Go 注册引导；场地收尾与酒店感谢确认。</div></div>
+        <div class="tl-item"><div class="tl-time">H + 24</div><div class="tl-phase">Post-Production · M5 数据速报</div><div class="tl-detail">数据速报发出（到场人数、视频产出、转化率、高潜名单）；视频发布追踪启动；创作者发布提醒推送。</div></div>
+        <div class="tl-item" style="padding-bottom:0"><div class="tl-time">H + 72</div><div class="tl-phase">Post-Production · M6 BD Package</div><div class="tl-detail">案例包 + 酒店简报完成；BD 会议邀约发出；高潜创作者复购邀约；SOP 优化归档，输入下一场。</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="section workflow-section" id="workflow">
+  <div class="s-eyebrow">04 — End-to-End Workflow</div>
+  <div class="s-title">Line Producer Framework</div>
+  <div class="wf-grid">
+    <div class="wf-card">
+      <div class="wf-head"><div class="wf-tag">Phase 01</div><div class="wf-title">Pre-<br>Production</div><span class="wf-ms">M1 · Lock T-24h</span></div>
+      <div class="wf-body">
+        <div class="wf-task"><span class="wf-dot">→</span>踩点 &amp; 拍摄位标记（房型、走廊、设施、户外）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>Room call sheet + amenities 向酒店确认</div>
+        <div class="wf-task"><span class="wf-dot">→</span>创作者画像分析（粉丝量、内容风格、权重）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>邀请 &amp; 确认名单（15–30 人目标）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>Runsheet 起草（分钟级时间轴）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>物料准备（brief 卡、check-in 表、引导单）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>兼职排班 &amp; 职责分配</div>
+        <div class="wf-task"><span class="wf-dot">→</span>风险预案（低到场 / 拍摄受阻 / 设备问题）</div>
+      </div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-head"><div class="wf-tag">Phase 02</div><div class="wf-title">On-Site<br>Production</div><span class="wf-ms">M2 · M3 · M4</span></div>
+      <div class="wf-body">
+        <div class="wf-task"><span class="wf-dot">→</span>签到管理 + Soft Open Briefing（场地 tour、拍摄规则）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>破冰 &amp; 分组（按内容风格 / 粉丝量级分批）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>TikTok Go app 操作演示（tag 挂载 demo）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>分批引导拍摄（房型、餐厅、泳池、大堂轮转）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>H+3 Content Checkpoint — 每人 ≥ 1 条初版</div>
+        <div class="wf-task"><span class="wf-dot">→</span>实时内容质检（画质、角度、tag、时长）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>高潜识别（内容质量 + 粉丝 + 互动意愿）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>H+5 高潜一对一转化；场地收尾</div>
+      </div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-head"><div class="wf-tag">Phase 03</div><div class="wf-title">Post-<br>Production</div><span class="wf-ms">M5 T+24 · M6 T+72</span></div>
+      <div class="wf-body">
+        <div class="wf-task"><span class="wf-dot">→</span>T+24 数据速报（到场、视频、转化率、高潜）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>发布追踪（tag 挂载 + 发布状态核查）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>未发布创作者 48h 提醒推送</div>
+        <div class="wf-task"><span class="wf-dot">→</span>内容数据采集（播放量、互动率、conversion）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>创作者回访（感谢 + 数据反馈 + 关系维护）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>T+72 案例包装（2–3 条精选 + 数据 + 画像）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>酒店版一页简报（曝光量 + 内容数据 + 佣金）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>BD 会议邀约（续约支撑材料）</div>
+      </div>
+    </div>
+    <div class="wf-card">
+      <div class="wf-head"><div class="wf-tag">Phase 04</div><div class="wf-title">Iteration<br>&amp; Scale</div><span class="wf-ms">Next Cycle</span></div>
+      <div class="wf-body">
+        <div class="wf-task"><span class="wf-dot">→</span>SOP 复盘 &amp; 优化记录归档</div>
+        <div class="wf-task"><span class="wf-dot">→</span>高潜创作者复购邀约（下场优先席位）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>创作者分级台账月度审查（升级 / 降级 / 休眠）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>酒店 BD 长约推进（季度框架协议谈判）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>新 venue 品类开拓（F&amp;B → Leisure → Beauty）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>Monthly Case Study Deck（BD pitch 素材库）</div>
+        <div class="wf-task"><span class="wf-dot">→</span>新商家任务上线时创作者匹配推送</div>
+        <div class="wf-task"><span class="wf-dot">→</span>下一场 Pre-Production Brief 输入</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREATOR TIERS -->
+<section class="section tiers-section" id="creators">
+  <div class="s-eyebrow">Creator Management</div>
+  <div class="s-title">Creator Lifecycle</div>
+  <div class="tiers-grid">
+    <div class="tier-card">
+      <div class="tier-vis v1">🌱</div>
+      <div class="tier-body">
+        <span class="t-badge b1">New · Recruit</span>
+        <div class="t-name">新触达创作者</div>
+        <div class="t-crit">1K–10K followers · 当场首次接触</div>
+        <div class="t-desc">现场 TikTok Go 注册引导 → 拍摄演示 → tag 挂载 demo → 成功发布 1 条即算转化。追踪 72h 内发布情况，未发布者触发提醒流程。</div>
+        <div class="t-cta"><span>Onboarding Flow</span><div class="t-btn">→</div></div>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-vis v2">⚡</div>
+      <div class="tier-body">
+        <span class="t-badge b2">Active · Tracking</span>
+        <div class="t-name">活跃创作者</div>
+        <div class="t-crit">已注册 TikTok Go · 有历史发布记录</div>
+        <div class="t-desc">内容质检（画质、时长、互动率）；发布频次监控；佣金收入反馈；同品类跨 venue 任务推送；月度发布报告共享。</div>
+        <div class="t-cta"><span>Quality Tracking</span><div class="t-btn">→</div></div>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-vis v3">🔥</div>
+      <div class="tier-body">
+        <span class="t-badge b3">High-Pot · Priority</span>
+        <div class="t-name">高潜创作者</div>
+        <div class="t-crit">内容质量高 · 互动数据优 · 转化意愿强</div>
+        <div class="t-desc">一对一关系建立；优先活动席位；专属 brief 定制；品类扩展优先试点；BD 案例合作；复购率 &gt; 60% 为健康指标。</div>
+        <div class="t-cta"><span>Priority Program</span><div class="t-btn">→</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="section metrics-section" id="metrics">
+  <div class="s-eyebrow s-eyebrow-dim">KPI Framework</div>
+  <div class="s-title s-title-white">Key Metrics Per Event</div>
+  <div class="metrics-grid">
+    <div class="m-card"><div class="m-num">≥60%</div><div class="m-label">签到率<br>by H+0:30 · M2 Soft Open</div></div>
+    <div class="m-card"><div class="m-num">20+</div><div class="m-label">视频产出<br>条数 per event</div></div>
+    <div class="m-card"><div class="m-num">3+</div><div class="m-label">新创作者转化<br>TikTok Go 注册</div></div>
+    <div class="m-card"><div class="m-num">3+</div><div class="m-label">高潜创作者标记<br>M4 @ H+5</div></div>
+    <div class="m-card"><div class="m-num">T+72</div><div class="m-label">BD Package<br>交付 Deadline</div></div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section del-section" id="deliverables">
+  <div class="s-eyebrow">05 — Key Deliverables</div>
+  <div class="s-title">Deliverable Stack</div>
+  <div class="del-grid">
+    <div class="del-card">
+      <div class="del-timing">Immediate · H+24</div>
+      <div class="del-title">数据速报</div>
+      <div class="del-desc">活动结束次日必达，用于内部 KPI 汇报与发布追踪启动。</div>
+      <div class="del-item">到场人数 &amp; 签到率</div>
+      <div class="del-item">视频产出总条数</div>
+      <div class="del-item">创作者转化数 &amp; 转化率</div>
+      <div class="del-item">高潜名单（姓名 + 粉丝量级 + 内容风格标签）</div>
+    </div>
+    <div class="del-card">
+      <div class="del-timing">Short-term · H+72</div>
+      <div class="del-title">结构化 Post-Event Report</div>
+      <div class="del-desc">含对内汇报版 + 酒店专用版一页简报，支撑续约谈判。</div>
+      <div class="del-item">酒店版：场地曝光量 + 内容数据 + 创作者画像摘要</div>
+      <div class="del-item">平台版：转化漏斗数据 + 高潜分析 + 下场建议</div>
+      <div class="del-item">BD 推进节点更新</div>
+    </div>
+    <div class="del-card">
+      <div class="del-timing">Rolling · Ongoing</div>
+      <div class="del-title">创作者分级台账</div>
+      <div class="del-desc">高潜激活与社群扩张的核心操盘工具，持续更新。</div>
+      <div class="del-item">活跃状态 / 内容质量评分 / 发布率</div>
+      <div class="del-item">复购意愿评分 + 品类偏好标签</div>
+      <div class="del-item">佣金收入历史（激励数据）</div>
+    </div>
+    <div class="del-card">
+      <div class="del-timing">BD Asset · Monthly</div>
+      <div class="del-title">Case Study Deck</div>
+      <div class="del-desc">直接用于酒店 BD Pitch，将单次合作转化为季度框架协议。</div>
+      <div class="del-item">2–3 条精选内容案例（数据 + 截图）</div>
+      <div class="del-item">佣金收益与预订转化数据</div>
+      <div class="del-item">创作者背书 + 品牌曝光量估算</div>
+      <div class="del-item">续约 Proposal 模板</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">Go Local.<br>Go Execute.</div>
+  <a class="cta-btn" href="#">Download Playbook</a>
+</div>
+
+<footer>
+  <div class="f-logo">TikTok Go Local · LA Ambassador</div>
+  <div class="f-note">Offline Event Operator Work Sample · Line Producer Framework</div>
+  <div class="f-note" style="color: rgba(200,255,0,0.5);">Playbook v1.0 · 2025</div>
+</footer>
+
+</body>
+</html>
